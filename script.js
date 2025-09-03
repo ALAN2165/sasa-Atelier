@@ -88,9 +88,8 @@ langToggle.addEventListener("click", () => {
     el.placeholder = el.getAttribute(`data-${currentLang}`);
   });
 });
-// ===== الكود بتاعك زي ما هو فوق =====
 
-// ✅ Swiper Init
+// ===== ✅ Swiper Init مع breakpoints =====
 const swiper = new Swiper('.swiper', {
   loop: true,
   autoplay: {
@@ -107,7 +106,19 @@ const swiper = new Swiper('.swiper', {
   },
   effect: "slide",
   speed: 800,
+  breakpoints: {
+    0: {
+      slidesPerView: 1,
+    },
+    600: {
+      slidesPerView: 2,
+    },
+    900: {
+      slidesPerView: 3,
+    }
+  }
 });
+
 // ===== EmailJS Send Feedback =====
 const feedbackForm = document.getElementById("feedbackForm");
 const formMessage = document.getElementById("formMessage");
@@ -128,3 +139,73 @@ feedbackForm.addEventListener("submit", function(e) {
       formMessage.className = "error";
     });
 });
+
+// ===== ScrollSpy Nav Highlight + Moving Indicator =====
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll("nav a");
+
+// create indicator line
+const nav = document.querySelector("nav");
+const indicator = document.createElement("span");
+indicator.classList.add("nav-indicator");
+nav.appendChild(indicator);
+
+function moveIndicator(element, show = true) {
+  if (!show || !element) {
+    indicator.style.width = "0";
+    indicator.style.opacity = "0";
+    return;
+  }
+  const rect = element.getBoundingClientRect();
+  const navRect = nav.getBoundingClientRect();
+  indicator.style.width = rect.width + "px";
+  indicator.style.left = (rect.left - navRect.left) + "px";
+  indicator.style.opacity = "1";
+}
+
+function updateNavColors() {
+  navLinks.forEach(link => {
+    if (!link.classList.contains("active")) {
+      link.style.color = document.body.classList.contains("dark") ? "white" : "black";
+      link.style.background = "none";
+      link.style.webkitBackgroundClip = "unset";
+      link.style.webkitTextFillColor = "unset";
+      link.style.animation = "";
+    } else {
+      link.style.background = "linear-gradient(270deg, hotpink, pink, beige, hotpink)";
+      link.style.backgroundSize = "300% 300%";
+      link.style.webkitBackgroundClip = "text";
+      link.style.webkitTextFillColor = "transparent";
+      link.style.animation = "moveColors 6s linear infinite";
+    }
+  });
+}
+
+function updateScrollSpy() {
+  let current = "";
+  let insideSection = false;
+
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 150;
+    const sectionHeight = section.clientHeight;
+    if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+      current = section.getAttribute("id");
+      insideSection = true;
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove("active");
+    if (link.getAttribute("href") === `#${current}`) {
+      link.classList.add("active");
+      moveIndicator(link, true);
+    }
+  });
+
+  if (!insideSection) moveIndicator(null, false);
+
+  updateNavColors();
+}
+
+window.addEventListener("scroll", updateScrollSpy);
+window.addEventListener("load", updateScrollSpy);
