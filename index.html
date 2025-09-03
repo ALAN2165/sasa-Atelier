@@ -65,23 +65,21 @@
   <section id="collection" class="collection">
     <h2 data-en="Our Collection" data-ar="مجموعتنا">Our Collection</h2>
 
-    <!-- ✅ Swiper Slider بدل الكروت -->
- <div class="swiper">
-  <div class="swiper-wrapper">
-    <div class="placeholder-box"><span>Image 1</span></div>
-    <div class="swiper-slide"><div class="placeholder-box">Image 1</div></div>
-    <div class="swiper-slide"><div class="placeholder-box">Image 2</div></div>
-    <div class="swiper-slide"><div class="placeholder-box">Image 3</div></div>
-    <div class="swiper-slide"><div class="placeholder-box">Image 4</div></div>
-    <div class="swiper-slide"><div class="placeholder-box">Image 5</div></div>
-  </div>
-  <!-- Pagination -->
-  <div class="swiper-pagination"></div>
-  <!-- Navigation -->
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
-</div>
-
+    <!-- ✅ Swiper Slider -->
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><div class="placeholder-box">Image 1</div></div>
+        <div class="swiper-slide"><div class="placeholder-box">Image 2</div></div>
+        <div class="swiper-slide"><div class="placeholder-box">Image 3</div></div>
+        <div class="swiper-slide"><div class="placeholder-box">Image 4</div></div>
+        <div class="swiper-slide"><div class="placeholder-box">Image 5</div></div>
+      </div>
+      <!-- Pagination -->
+      <div class="swiper-pagination"></div>
+      <!-- Navigation -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
   </section>
 
   <section id="contact" class="contact">
@@ -91,14 +89,26 @@
       <input type="email" name="user_email" placeholder="Your Email" data-en="Your Email" data-ar="بريدك الإلكتروني" required>
       <input type="tel" name="user_phone" placeholder="Phone Number" data-en="Phone Number" data-ar="رقم الهاتف">
       <textarea name="message" placeholder="Your Message" data-en="Your Message" data-ar="رسالتك" required></textarea>
-      <div class="stars" role="radiogroup" aria-label="Rating">
-        <span role="radio" aria-checked="false">★</span><span role="radio" aria-checked="false">★</span><span role="radio" aria-checked="false">★</span><span role="radio" aria-checked="false">★</span><span role="radio" aria-checked="false">★</span>
+      <div class="stars">
+        <i class="fa-regular fa-star" data-value="1"></i>
+        <i class="fa-regular fa-star" data-value="2"></i>
+        <i class="fa-regular fa-star" data-value="3"></i>
+        <i class="fa-regular fa-star" data-value="4"></i>
+        <i class="fa-regular fa-star" data-value="5"></i>
       </div>
       <button type="submit" class="btn" data-en="Send Feedback" data-ar="إرسال">Send Feedback</button>
-
-      <!-- ✅ تعديل: مكان الرسالة -->
-      <div id="formMessage"></div>
     </form>
+
+    <!-- ✅ البوب اب (ID متطابق مع الجافا سكريبت) -->
+    <div id="thankYouPopup" class="popup">
+      <div class="popup-content">
+        <p data-en="Thank you! Your feedback has been sent successfully 🎉"
+           data-ar="شكراً! تم إرسال ملاحظاتك بنجاح 🎉">
+          Thank you! Your feedback has been sent successfully 🎉
+        </p>
+        <button id="closePopupBtn" class="btn" data-en="Close" data-ar="إغلاق">Close</button>
+      </div>
+    </div>
   </section>
 
   <footer>
