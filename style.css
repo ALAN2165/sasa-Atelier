@@ -935,3 +935,385 @@ footer{ padding:2rem; background:#111; color:#fff; text-align:center; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+/* موبايل */
+@media (max-width: 600px) {
+  header nav {
+    display: none; /* نخليها تختفي ونستبدلها بالـ burger menu */
+  }
+
+  header .header-buttons {
+    gap: 5px;
+  }
+
+  .hero h2 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .explore-btn {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .feedback-form input,
+  .feedback-form textarea,
+  .feedback-form button {
+    width: 100%;
+    font-size: 1rem;
+  }
+}
+
+/* تابلت */
+@media (min-width: 601px) and (max-width: 900px) {
+  .hero h2 {
+    font-size: 2rem;
+  }
+
+  .explore-btn {
+    padding: 12px 20px;
+    font-size: 1.1rem;
+  }
+
+  .feedback-form {
+    max-width: 90%;
+    margin: auto;
+  }
+}
+nav a {
+  position: relative;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+nav a.active {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #ff4d6d, #ffcc00, #4dd0e1);
+  background-size: 300% 100%;
+  animation: glowline 3s linear infinite;
+  border-radius: 4px;
+}
+
+@keyframes glowline {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+/* شكل اللينكات العادي */
+nav a {
+  position: relative;
+  font-size: 1rem;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+/* اللينك اللي عليه التركيز (السكشن الحالي) */
+nav a.active {
+  font-size: 1.3rem; /* يكبر */
+  font-weight: bold;
+  background: linear-gradient(270deg, pink, hotpink, beige, pink);
+  background-size: 600% 600%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientMove 5s ease infinite;
+}
+
+/* الأندرلاين */
+nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, pink, hotpink, beige, pink);
+  background-size: 300% 300%;
+  border-radius: 2px;
+  animation: gradientMove 5s ease infinite;
+}
+
+/* حركة الألوان */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+/* ===== Nav color fix (light + dark safe) ===== */
+
+/* افتراضيات ألوان للنافيجيشن */
+:root {
+  --nav-text-light: #2c2c2c;    /* لون اللينك في لايت مود */
+  --nav-text-dark:  #ffffff;    /* لون اللينك في دارك مود */
+  --nav-muted:      #6b6b6b;    /* لون لينكات غير نشطة */
+  --nav-accent:     #ff69b4;    /* لون لمسة عند الـ hover (اختياري) */
+}
+
+/* قاعدة عامة — تأكد اللينكات تبان في اللايت مود */
+nav a {
+  color: var(--nav-text-light);
+  transition: color .28s ease, transform .28s cubic-bezier(.2,.9,.2,1);
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* لون أقل بروز للروابط الغير نشطة (لو حابب) */
+nav a:not(.active) {
+  color: var(--nav-muted);
+}
+
+/* hover / focus لتحسين التفاعل */
+nav a:hover,
+nav a:focus {
+  color: var(--nav-accent);
+  outline: none;
+}
+
+/* Dark mode override: لما الصفحة فيها body.dark نخلي اللينكات فاتحة */
+body.dark nav a,
+body.dark nav a:not(.active) {
+  color: var(--nav-text-dark);
+}
+
+/* ===== Active link (gradient + scale + underline) ===== */
+/* خلي gradient يتحرك باستمرار (linear infinite) */
+nav a.active {
+  font-weight: 700;
+  transform: scale(1.06);
+  background: linear-gradient(
+    90deg,
+    #ffc0cb 0%,
+    #ff69b4 35%,
+    #f5deb3 70%,
+    #e75480 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* gradient داخل النص */
+  animation: navGradientFlow 12s linear infinite; /* continuous */
+  text-shadow: 0 0 8px rgba(255,140,170,0.12);
+}
+
+/* underline ناعم يتوسع تدريجياً */
+nav a.active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(1);
+  width: 85%;
+  height: 4px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #ffc0cb, #ff69b4, #f5deb3, #e75480);
+  background-size: 250% 100%;
+  animation: navGradientFlow 12s linear infinite;
+  box-shadow: 0 6px 18px rgba(255,140,170,0.06);
+  opacity: 1;
+}
+
+/* continuous gradient keyframes (linear => no sudden stop) */
+@keyframes navGradientFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Accessibility: Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  nav a.active, nav a.active::after { animation: none !important; transition: none !important; }
+}
+/* nav links */
+nav {
+  position: relative;
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  position: relative;
+  font-weight: 600;
+  text-decoration: none;
+  color: #333;
+  padding: 5px 0;
+  transition: color 0.4s ease;
+}
+
+nav a.active {
+  color: #c2185b; /* غامق يبان على اللايت مود */
+  transform: scale(1.05);
+  transition: color 0.4s ease, transform 0.4s ease;
+}
+
+/* moving underline (indicator) */
+nav::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, hotpink, deeppink, #b56576);
+  border-radius: 2px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+nav {
+  position: relative;
+}
+
+nav a.active {
+  color: #c2185b; /* ألوان غامقة تبان كويس في اللايت مود */
+  transform: scale(1.08);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, hotpink, deeppink, #b56576);
+  border-radius: 2px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+nav {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+nav a {
+  position: relative;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav a::after {
+  display: none !important; /* لو فيه لاين معمول قبل كدا */
+}
+
+nav a.active {
+  color: #c2185b; /* بينك غامق يبان في اللايت مود */
+  transform: scale(1.08);
+}
+
+.nav-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, hotpink, deeppink, #b56576);
+  border-radius: 2px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* ===== Nav Indicator Line ===== */
+.nav-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  border-radius: 2px;
+  background: linear-gradient(270deg, hotpink, pink, beige, hotpink);
+  background-size: 300% 300%;
+  animation: moveColors 5s linear infinite;
+  transition: all 0.25s ease; /* أسرع من الأول */
+}
+
+/* النصوص (لينكات الناف) */
+nav a {
+  position: relative;
+  font-weight: 500;
+  transition: color 0.25s ease, transform 0.25s ease;
+  background: linear-gradient(270deg, hotpink, pink, beige, hotpink);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: moveColors 6s linear infinite;
+}
+
+/* اللينك الاكتف يكبر */
+nav a.active {
+  transform: scale(1.15);
+  font-weight: 600;
+}
+
+/* الأنيميشـن بتاع الألوان */
+@keyframes moveColors {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+/* Nav Links Normal */
+nav a {
+  position: relative;
+  font-weight: 500;
+  transition: color 0.25s ease, transform 0.25s ease;
+  color: black; /* اللون الافتراضي في اللايت مود */
+}
+
+body.dark nav a {
+  color: white; /* اللون الافتراضي في الدارك مود */
+}
+
+/* Nav Active */
+nav a.active {
+  transform: scale(1.15);
+  font-weight: 600;
+  background: linear-gradient(270deg, hotpink, pink, beige, hotpink);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: moveColors 6s linear infinite;
+}
+
+/* Nav Indicator */
+.nav-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  background: linear-gradient(270deg, hotpink, pink, beige, hotpink);
+  background-size: 300% 300%;
+  animation: moveColors 5s linear infinite;
+  display: none; /* مش ظاهر إلا لما تدخل السكشن */
+}
+
+/* Colors Animation */
+@keyframes moveColors {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+nav {
+  position: relative;
+}
+
+.nav-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: hotpink;
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+@keyframes moveColors {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
