@@ -17,13 +17,55 @@ function typing() {
 }
 typing();
 
-// Feedback Stars
-const stars = document.querySelectorAll(".stars span");
+// Feedback Stars + Animation
+const stars = document.querySelectorAll(".stars i");
+let selectedRating = 0;
+
 stars.forEach((star, index) => {
   star.addEventListener("click", () => {
+    selectedRating = index + 1;
     stars.forEach((s, i) => {
-      s.classList.toggle("active", i <= index);
-      s.setAttribute("aria-checked", i <= index ? "true" : "false");
+      if (i <= index) {
+        s.classList.remove("fa-regular");
+        s.classList.add("fa-solid", "active");
+        s.style.color = "#FFD700";
+        s.style.transform = "scale(1.3)";
+        setTimeout(() => { s.style.transform = "scale(1)"; }, 200);
+      } else {
+        s.classList.remove("fa-solid", "active");
+        s.classList.add("fa-regular");
+        s.style.color = "";
+        s.style.transform = "scale(1)";
+      }
+    });
+  });
+
+  // Hover Effect
+  star.addEventListener("mouseenter", () => {
+    stars.forEach((s, i) => {
+      if (i <= index) {
+        s.classList.remove("fa-regular");
+        s.classList.add("fa-solid");
+        s.style.color = "#FFD700";
+      } else if (i >= selectedRating) {
+        s.classList.remove("fa-solid");
+        s.classList.add("fa-regular");
+        s.style.color = "";
+      }
+    });
+  });
+
+  star.addEventListener("mouseleave", () => {
+    stars.forEach((s, i) => {
+      if (i < selectedRating) {
+        s.classList.remove("fa-regular");
+        s.classList.add("fa-solid");
+        s.style.color = "#FFD700";
+      } else {
+        s.classList.remove("fa-solid");
+        s.classList.add("fa-regular");
+        s.style.color = "";
+      }
     });
   });
 });
@@ -74,7 +116,6 @@ const langToggle = document.getElementById("langToggle");
 let currentLang = "en";
 langToggle.addEventListener("click", () => {
   currentLang = currentLang === "en" ? "ar" : "en";
-  // icon animation
   langToggle.classList.add("switching");
   setTimeout(() => langToggle.classList.remove("switching"), 500);
 
@@ -107,44 +148,98 @@ const swiper = new Swiper('.swiper', {
   effect: "slide",
   speed: 800,
   breakpoints: {
-    0: {
-      slidesPerView: 1,
-    },
-    600: {
-      slidesPerView: 2,
-    },
-    900: {
-      slidesPerView: 3,
-    }
+    0: { slidesPerView: 1 },
+    600: { slidesPerView: 2 },
+    900: { slidesPerView: 3 }
   }
 });
 
-// ===== EmailJS Send Feedback =====
+// ===== EmailJS Send Feedback + Popup =====
 const feedbackForm = document.getElementById("feedbackForm");
-const formMessage = document.getElementById("formMessage");
+const feedbackPopup = document.getElementById("thankYouPopup");
+const popupMessage = feedbackPopup ? feedbackPopup.querySelector("p") : null;
+const closePopupBtn = document.getElementById("closePopupBtn");
 
-feedbackForm.addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  emailjs.sendForm(service_bx794b7, template_sfno6wa, feedbackForm)
-    .then(() => {
-      formMessage.textContent = "شكراً! تم إرسال ملاحظاتك بنجاح 🎉";
-      formMessage.className = "success";
-      feedbackForm.reset();
-      stars.forEach(s => { s.classList.remove("active"); s.setAttribute("aria-checked","false"); });
-    })
-    .catch((error) => {
-      console.error("EmailJS Error:", error);
-      formMessage.textContent = "حصل خطأ أثناء الإرسال. حاول مرة تانية.";
-      formMessage.className = "error";
-    });
+window.addEventListener("load", () => {
+  if (feedbackPopup) feedbackPopup.style.display = "none";
 });
+
+function hidePopup(instant = false) {
+  if (!feedbackPopup) return;
+
+  if (instant) {
+    feedbackPopup.classList.remove("show", "fade-out");
+    feedbackPopup.style.display = "none";
+  } else {
+    feedbackPopup.classList.add("fade-out");
+    setTimeout(() => {
+      feedbackPopup.classList.remove("show", "fade-out");
+      feedbackPopup.style.display = "none";
+    }, 400);
+  }
+}
+
+if (closePopupBtn) {
+  closePopupBtn.addEventListener("click", () => hidePopup(false));
+}
+
+if (feedbackForm) {
+  feedbackForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    emailjs.sendForm("service_bx794b7", "template_sfno6wa", feedbackForm, "angnRXHRdzuZeo33H")
+      .then(() => {
+        if (popupMessage) {
+          if (document.documentElement.lang === "ar") {
+            popupMessage.textContent = "🎉 تم الإرسال بنجاح! رأيك يفرق معانا ❤️";
+            closePopupBtn.textContent = "تم";
+          } else {
+            popupMessage.textContent = "🎉 Sent successfully! Your feedback means a lot ❤️";
+            closePopupBtn.textContent = "Thanks";
+          }
+        }
+
+        // ✅ Reset form
+        feedbackForm.reset();
+
+        // ✅ Reset stars
+        selectedRating = 0;
+        stars.forEach(s => {
+          s.classList.remove("fa-solid", "active");
+          s.classList.add("fa-regular");
+          s.style.color = "";
+          s.style.transform = "scale(1)";
+        });
+
+        // ✅ Show popup with fade-in
+        feedbackPopup.classList.remove("fade-out");
+        feedbackPopup.style.display = "flex";
+        setTimeout(() => feedbackPopup.classList.add("show"), 10);
+      })
+      .catch((error) => {
+        console.error("EmailJS Error:", error);
+        if (popupMessage) {
+          if (document.documentElement.lang === "ar") {
+            popupMessage.textContent = "❌ حصل خطأ أثناء الإرسال. حاول مرة تانية.";
+            closePopupBtn.textContent = "إغلاق";
+          } else {
+            popupMessage.textContent = "❌ An error occurred while sending. Please try again.";
+            closePopupBtn.textContent = "Close";
+          }
+        }
+
+        // ✅ حتى لو فيه خطأ البوب أب يظهر
+        feedbackPopup.classList.remove("fade-out");
+        feedbackPopup.style.display = "flex";
+        setTimeout(() => feedbackPopup.classList.add("show"), 10);
+      });
+  });
+}
 
 // ===== ScrollSpy Nav Highlight + Moving Indicator =====
 const sections = document.querySelectorAll("section");
 const navLinks = document.querySelectorAll("nav a");
 
-// create indicator line
 const nav = document.querySelector("nav");
 const indicator = document.createElement("span");
 indicator.classList.add("nav-indicator");
