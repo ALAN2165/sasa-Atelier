@@ -1317,3 +1317,268 @@ nav {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+.stars {
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 28px;
+  color: #ccc;
+}
+
+.stars i {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.stars i.active {
+  color: #ffcc00;
+  transform: scale(1.3);
+}
+
+.stars i:hover {
+  color: #ffda44;
+  transform: scale(1.2);
+}
+/* Popup Overlay */
+.popup-overlay {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.popup-box {
+  background: white;
+  color: black;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 350px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  animation: scaleUp 0.4s ease forwards;
+}
+
+body.dark .popup-box {
+  background: #222;
+  color: white;
+}
+
+.popup-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: hotpink;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.popup-btn:hover {
+  background: deeppink;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+/* Popup hidden by default */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.popup-content {
+  background: white;
+  color: black;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+body.dark .popup-content {
+  background: #222;
+  color: white;
+}
+/* البوب أب الأساسي */
+.popup {
+  display: none; /* ✅ يخليه مخفي أول ما الصفحة تفتح */
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+}
+
+/* محتوى البوب أب */
+.popup-content {
+  background: var(--bg-color, #fff);
+  color: var(--text-color, #000);
+  padding: 20px 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* زرار الكلوز */
+.popup-content .btn {
+  margin-top: 15px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.popup-content .btn:hover {
+  background: #0056b3;
+}
+
+/* أنيميشن */
+@keyframes fadeIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+/* ✅ Popup Styles */
+.popup {
+  display: none; /* افتراضي مخفي */
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(3px);
+  z-index: 3000;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup.show {
+  display: flex; /* يبان لما نضيف الكلاس show */
+  animation: fadeIn 0.3s ease;
+}
+
+.popup-content {
+  background: var(--card);
+  color: var(--fg);
+  padding: 2rem;
+  border-radius: 16px;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  animation: slideUp 0.4s ease;
+}
+
+.popup-content p {
+  margin-bottom: 1.2rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.popup-content .btn {
+  margin-top: 0.5rem;
+}
+
+/* ✅ Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+/* Popup overlay */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Show with fade-in */
+.popup.show {
+  display: flex;
+  opacity: 1;
+}
+
+/* Fade-out effect */
+.popup.fade-out {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Popup content */
+.popup-content {
+  background: #fff;
+  padding: 25px 35px;
+  border-radius: 18px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  animation: popupScale 0.3s ease;
+}
+
+/* Small zoom effect */
+@keyframes popupScale {
+  from { transform: scale(0.8); }
+  to { transform: scale(1); }
+}
+
+.popup-content p {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+.popup-content .btn {
+  background: hotpink;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.popup-content .btn:hover {
+  background: deeppink;
+}
