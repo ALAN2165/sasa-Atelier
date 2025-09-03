@@ -1,39 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sasa Atelier</title>
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins&family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  <link rel="stylesheet" href="style.css">
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("angnRXHRdzuZeo33H"); // Public Key
+    })();
+  </script>
 </head>
 <body>
   <!-- Scroll Progress Bar -->
   <div id="progressBar"></div>
 
   <header>
-    <h1 id="siteTitle">Sasa Atelier</h1>
+    <h1 id="siteTitle" class="gradient-animated">Sasa Atelier</h1>
     <nav>
       <a href="#about" data-en="About" data-ar="من نحن">About</a>
       <a href="#collection" data-en="Collection" data-ar="المجموعة">Collection</a>
       <a href="#contact" data-en="Contact" data-ar="تواصل">Contact</a>
     </nav>
     <div class="header-buttons">
-      <button id="modeToggle"><i class="fa-solid fa-moon"></i></button>
-      <button id="langToggle"><i class="fa-solid fa-language"></i></button>
+      <button id="modeToggle" aria-label="Toggle theme">
+        <i class="fa-solid fa-moon" aria-hidden="true"></i>
+      </button>
+      <button id="langToggle" aria-label="Toggle language">
+        <i class="fa-solid fa-language" aria-hidden="true"></i>
+      </button>
     </div>
   </header>
 
   <section class="hero">
-    <h2 class="typing-gradient" id="typing"></h2>
+    <h2 class="typing-gradient gradient-animated" id="typing"></h2>
     <button class="btn explore-btn" id="exploreBtn" data-en="Explore Collection" data-ar="استكشف المجموعة">Explore Collection</button>
 
-    <div class="shapes">
+    <div class="shapes" aria-hidden="true">
       <span></span><span></span><span></span><span></span>
       <span></span><span></span><span></span><span></span>
     </div>
@@ -49,24 +64,40 @@
 
   <section id="collection" class="collection">
     <h2 data-en="Our Collection" data-ar="مجموعتنا">Our Collection</h2>
-    <div class="cards">
-      <div class="card" data-en="Dress 1" data-ar="فستان 1">Dress 1</div>
-      <div class="card" data-en="Dress 2" data-ar="فستان 2">Dress 2</div>
-      <div class="card" data-en="Dress 3" data-ar="فستان 3">Dress 3</div>
-    </div>
+
+    <!-- ✅ Swiper Slider بدل الكروت -->
+ <div class="swiper">
+  <div class="swiper-wrapper">
+    <div class="placeholder-box"><span>Image 1</span></div>
+    <div class="swiper-slide"><div class="placeholder-box">Image 1</div></div>
+    <div class="swiper-slide"><div class="placeholder-box">Image 2</div></div>
+    <div class="swiper-slide"><div class="placeholder-box">Image 3</div></div>
+    <div class="swiper-slide"><div class="placeholder-box">Image 4</div></div>
+    <div class="swiper-slide"><div class="placeholder-box">Image 5</div></div>
+  </div>
+  <!-- Pagination -->
+  <div class="swiper-pagination"></div>
+  <!-- Navigation -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+
   </section>
 
   <section id="contact" class="contact">
     <h2 data-en="Feedback" data-ar="ملاحظاتك">Feedback</h2>
-    <form class="feedback-form">
-      <input type="text" placeholder="Your Name" data-en="Your Name" data-ar="اسمك" required>
-      <input type="email" placeholder="Your Email" data-en="Your Email" data-ar="بريدك الإلكتروني" required>
-      <input type="tel" placeholder="Phone Number" data-en="Phone Number" data-ar="رقم الهاتف">
-      <textarea placeholder="Your Message" data-en="Your Message" data-ar="رسالتك" required></textarea>
-      <div class="stars">
-        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+    <form id="feedbackForm" class="feedback-form">
+      <input type="text" name="user_name" placeholder="Your Name" data-en="Your Name" data-ar="اسمك" required>
+      <input type="email" name="user_email" placeholder="Your Email" data-en="Your Email" data-ar="بريدك الإلكتروني" required>
+      <input type="tel" name="user_phone" placeholder="Phone Number" data-en="Phone Number" data-ar="رقم الهاتف">
+      <textarea name="message" placeholder="Your Message" data-en="Your Message" data-ar="رسالتك" required></textarea>
+      <div class="stars" role="radiogroup" aria-label="Rating">
+        <span role="radio" aria-checked="false">★</span><span role="radio" aria-checked="false">★</span><span role="radio" aria-checked="false">★</span><span role="radio" aria-checked="false">★</span><span role="radio" aria-checked="false">★</span>
       </div>
       <button type="submit" class="btn" data-en="Send Feedback" data-ar="إرسال">Send Feedback</button>
+
+      <!-- ✅ تعديل: مكان الرسالة -->
+      <div id="formMessage"></div>
     </form>
   </section>
 
@@ -77,8 +108,10 @@
     </p>
   </footer>
 
-  <button id="scrollTopBtn">↑</button>
+  <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
 
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
