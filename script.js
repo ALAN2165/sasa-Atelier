@@ -27,8 +27,17 @@ startTypingEffect();
 const stars = document.querySelectorAll(".stars i");
 let selectedRating = 0;
 
+function createSparkle(x, y) {
+  const sparkle = document.createElement("span");
+  sparkle.className = "sparkle";
+  sparkle.style.left = `${x}px`;
+  sparkle.style.top = `${y}px`;
+  document.body.appendChild(sparkle);
+  setTimeout(() => sparkle.remove(), 600);
+}
+
 stars.forEach((star, index) => {
-  star.addEventListener("click", () => {
+  star.addEventListener("click", (e) => {
     selectedRating = index + 1;
     stars.forEach((s, i) => {
       if (i <= index) {
@@ -44,35 +53,7 @@ stars.forEach((star, index) => {
         s.style.transform = "scale(1)";
       }
     });
-  });
-
-  // Hover Effect
-  star.addEventListener("mouseenter", () => {
-    stars.forEach((s, i) => {
-      if (i <= index) {
-        s.classList.remove("fa-regular");
-        s.classList.add("fa-solid");
-        s.style.color = "#FFD700";
-      } else if (i >= selectedRating) {
-        s.classList.remove("fa-solid");
-        s.classList.add("fa-regular");
-        s.style.color = "";
-      }
-    });
-  });
-
-  star.addEventListener("mouseleave", () => {
-    stars.forEach((s, i) => {
-      if (i < selectedRating) {
-        s.classList.remove("fa-regular");
-        s.classList.add("fa-solid");
-        s.style.color = "#FFD700";
-      } else {
-        s.classList.remove("fa-solid");
-        s.classList.add("fa-regular");
-        s.style.color = "";
-      }
-    });
+    createSparkle(e.clientX, e.clientY);
   });
 });
 
@@ -136,7 +117,6 @@ langToggle.addEventListener("click", () => {
     el.placeholder = el.getAttribute(`data-${currentLang}`);
   });
 
-  // restart typing effect
   startTypingEffect();
 });
 
@@ -164,38 +144,41 @@ const swiper = new Swiper('.swiper', {
   }
 });
 
+// ===== Loader =====
+const loaderOverlay = document.getElementById("loaderOverlay");
+function showLoader() { loaderOverlay.classList.add("show"); }
+function hideLoader() { loaderOverlay.classList.remove("show"); }
+
 // ===== Newsletter Thank You Message =====
 const newsletterForm = document.getElementById("newsletterForm");
 if (newsletterForm) {
   newsletterForm.addEventListener("submit", (e) => {
     e.preventDefault();
+    showLoader();
 
-    // Hide form
-    newsletterForm.style.display = "none";
-
-    // Create Thank You message
-    const thankYou = document.createElement("div");
-    thankYou.className = "thank-you-box";
-
-    if (document.documentElement.lang === "ar") {
-      thankYou.innerHTML = `<h3>✅ شكراً لاشتراكك!</h3>
-                            <p>ستصلك أحدث الأخبار والعروض أولاً بأول.</p>`;
-    } else {
-      thankYou.innerHTML = `<h3>✅ Thank you for subscribing!</h3>
-                            <p>You’ll now stay updated with our latest news & offers.</p>`;
-    }
-
-    newsletterForm.parentNode.appendChild(thankYou);
-
-    // After 5 seconds fade out then show form again
     setTimeout(() => {
-      thankYou.style.animation = "fadeOut 0.5s forwards";
+      hideLoader();
+      newsletterForm.style.display = "none";
+      const thankYou = document.createElement("div");
+      thankYou.className = "thank-you-box pulse";
+
+      if (document.documentElement.lang === "ar") {
+        thankYou.innerHTML = `<h3>✅ شكراً لاشتراكك!</h3><p>ستصلك أحدث الأخبار والعروض أولاً بأول.</p>`;
+      } else {
+        thankYou.innerHTML = `<h3>✅ Thank you for subscribing!</h3><p>You’ll now stay updated with our latest news & offers.</p>`;
+      }
+
+      newsletterForm.parentNode.appendChild(thankYou);
+
       setTimeout(() => {
-        thankYou.remove();
-        newsletterForm.style.display = "flex";
-        newsletterForm.reset();
-      }, 500);
-    }, 5000);
+        thankYou.style.animation = "fadeOut 0.5s forwards";
+        setTimeout(() => {
+          thankYou.remove();
+          newsletterForm.style.display = "flex";
+          newsletterForm.reset();
+        }, 500);
+      }, 5000);
+    }, 1500);
   });
 }
 
@@ -209,29 +192,14 @@ window.addEventListener("load", () => {
   if (feedbackPopup) feedbackPopup.style.display = "none";
 });
 
-function hidePopup(instant = false) {
-  if (!feedbackPopup) return;
-  if (instant) {
-    feedbackPopup.classList.remove("show", "fade-out");
-    feedbackPopup.style.display = "none";
-  } else {
-    feedbackPopup.classList.add("fade-out");
-    setTimeout(() => {
-      feedbackPopup.classList.remove("show", "fade-out");
-      feedbackPopup.style.display = "none";
-    }, 400);
-  }
-}
-
-if (closePopupBtn) {
-  closePopupBtn.addEventListener("click", () => hidePopup(false));
-}
-
 if (feedbackForm) {
   feedbackForm.addEventListener("submit", function(e) {
     e.preventDefault();
+    showLoader();
+
     emailjs.sendForm("service_bx794b7", "template_sfno6wa", feedbackForm, "angnRXHRdzuZeo33H")
       .then(() => {
+        hideLoader();
         if (popupMessage) {
           if (document.documentElement.lang === "ar") {
             popupMessage.textContent = "🎉 تم الإرسال بنجاح! رأيك يفرق معانا ❤️";
@@ -254,6 +222,7 @@ if (feedbackForm) {
         setTimeout(() => feedbackPopup.classList.add("show"), 10);
       })
       .catch(() => {
+        hideLoader();
         if (popupMessage) {
           if (document.documentElement.lang === "ar") {
             popupMessage.textContent = "❌ حصل خطأ أثناء الإرسال. حاول مرة تانية.";
