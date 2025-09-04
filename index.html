@@ -83,11 +83,7 @@
   <section id="collection" class="collection">
     <h2 data-en="Our Collection" data-ar="مجموعتنا">Our Collection</h2>
 
-    <div
-      class="swiper"
-      role="region"
-      aria-roledescription="carousel"
-      aria-label="Sasa Atelier collection gallery">
+    <div class="swiper" role="region" aria-roledescription="carousel" aria-label="Sasa Atelier collection gallery">
       <div class="swiper-wrapper">
         <div class="swiper-slide"><div class="placeholder-box" role="img" aria-label="Collection item 1">Image 1</div></div>
         <div class="swiper-slide"><div class="placeholder-box" role="img" aria-label="Collection item 2">Image 2</div></div>
@@ -117,6 +113,14 @@
       </div>
       <button type="submit" class="btn" data-en="Send Feedback" data-ar="إرسال">Send Feedback</button>
     </form>
+
+    <!-- Feedback Thank You Popup -->
+    <div id="thankYouPopup" class="popup" role="dialog" aria-modal="true" aria-labelledby="popupMessage">
+      <div class="popup-content">
+        <p id="popupMessage">Thank you! Your feedback has been sent successfully 🎉</p>
+        <button id="closePopupBtn" class="btn">Close</button>
+      </div>
+    </div>
   </section>
 
   <!-- Newsletter Section -->
@@ -136,12 +140,19 @@
     </p>
   </footer>
 
-  <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+<button id="scrollTopBtn" aria-label="Scroll to top">
+  <i class="fas fa-arrow-up"></i>
+</button>
 
   <!-- WhatsApp Floating Button -->
   <a id="whatsappBtn" href="https://wa.me/201061883443" target="_blank" aria-label="Chat on WhatsApp">
     <i class="fab fa-whatsapp"></i>
   </a>
+<!-- Loader Overlay -->
+<div id="loaderOverlay">
+  <div class="loader"></div>
+</div>
+
 
   <!-- Tawk.to Live Chat -->
   <script type="text/javascript">
