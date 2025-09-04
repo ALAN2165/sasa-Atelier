@@ -2308,3 +2308,45 @@ body:not(.dark) .thank-you-box {
     transform: translateY(-10px);
   }
 }
+/* ===== Responsive Newsletter ===== */
+.subscribe-box {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.subscribe-box input {
+  flex: 1;
+  min-width: 250px;
+  padding: 12px 15px;
+  border: 2px solid var(--text-color);
+  border-radius: 25px;
+  font-size: 1rem;
+}
+
+.subscribe-box button {
+  padding: 12px 25px;
+  border-radius: 25px;
+  white-space: nowrap;
+}
+
+/* 📱 على الموبايل */
+@media (max-width: 600px) {
+  .subscribe-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .subscribe-box input,
+  .subscribe-box button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .subscribe-box button {
+    margin-top: 10px;
+  }
+}
+
