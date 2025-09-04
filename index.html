@@ -5,8 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sasa Atelier</title>
 
+  <!-- Meta (SEO & Theming) -->
+  <meta name="description" content="Sasa Atelier blends timeless elegance with modern creativity to craft fashion that speaks." />
+  <meta name="theme-color" content="#ff69b4" />
+  <meta name="color-scheme" content="light dark" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Sasa Atelier" />
+  <meta property="og:description" content="Timeless elegance. Modern creativity." />
+  <meta property="og:image" content="https://example.com/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins&family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
@@ -35,17 +46,24 @@
       <a href="#contact" data-en="Contact" data-ar="تواصل">Contact</a>
     </nav>
     <div class="header-buttons">
-      <button id="modeToggle" aria-label="Toggle theme">
+      <button id="modeToggle" type="button" aria-label="Toggle theme">
         <i class="fa-solid fa-moon" aria-hidden="true"></i>
       </button>
-      <button id="langToggle" aria-label="Toggle language">
+      <button id="langToggle" type="button" aria-label="Toggle language">
         <i class="fa-solid fa-language" aria-hidden="true"></i>
       </button>
     </div>
   </header>
 
   <section class="hero">
-    <h2 class="typing-gradient gradient-animated" id="typing"></h2>
+    <h2
+      class="typing-gradient gradient-animated"
+      id="typing"
+      aria-live="polite"
+      data-en="Elegance in Every Stitch"
+      data-ar="أناقة في كل غرزة">
+    </h2>
+
     <button class="btn explore-btn" id="exploreBtn" data-en="Explore Collection" data-ar="استكشف المجموعة">Explore Collection</button>
 
     <div class="shapes" aria-hidden="true">
@@ -65,62 +83,79 @@
   <section id="collection" class="collection">
     <h2 data-en="Our Collection" data-ar="مجموعتنا">Our Collection</h2>
 
-    <!-- ✅ Swiper Slider -->
-    <div class="swiper">
+    <div
+      class="swiper"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Sasa Atelier collection gallery">
       <div class="swiper-wrapper">
-        <div class="swiper-slide"><div class="placeholder-box">Image 1</div></div>
-        <div class="swiper-slide"><div class="placeholder-box">Image 2</div></div>
-        <div class="swiper-slide"><div class="placeholder-box">Image 3</div></div>
-        <div class="swiper-slide"><div class="placeholder-box">Image 4</div></div>
-        <div class="swiper-slide"><div class="placeholder-box">Image 5</div></div>
+        <div class="swiper-slide"><div class="placeholder-box" role="img" aria-label="Collection item 1">Image 1</div></div>
+        <div class="swiper-slide"><div class="placeholder-box" role="img" aria-label="Collection item 2">Image 2</div></div>
+        <div class="swiper-slide"><div class="placeholder-box" role="img" aria-label="Collection item 3">Image 3</div></div>
+        <div class="swiper-slide"><div class="placeholder-box" role="img" aria-label="Collection item 4">Image 4</div></div>
+        <div class="swiper-slide"><div class="placeholder-box" role="img" aria-label="Collection item 5">Image 5</div></div>
       </div>
-      <!-- Pagination -->
-      <div class="swiper-pagination"></div>
-      <!-- Navigation -->
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+      <div class="swiper-pagination" aria-hidden="true"></div>
+      <div class="swiper-button-prev" aria-label="Previous slide" title="Previous"></div>
+      <div class="swiper-button-next" aria-label="Next slide" title="Next"></div>
     </div>
   </section>
 
   <section id="contact" class="contact">
     <h2 data-en="Feedback" data-ar="ملاحظاتك">Feedback</h2>
     <form id="feedbackForm" class="feedback-form">
-      <input type="text" name="user_name" placeholder="Your Name" data-en="Your Name" data-ar="اسمك" required>
-      <input type="email" name="user_email" placeholder="Your Email" data-en="Your Email" data-ar="بريدك الإلكتروني" required>
-      <input type="tel" name="user_phone" placeholder="Phone Number" data-en="Phone Number" data-ar="رقم الهاتف">
-      <textarea name="message" placeholder="Your Message" data-en="Your Message" data-ar="رسالتك" required></textarea>
-      <div class="stars">
-        <i class="fa-regular fa-star" data-value="1"></i>
-        <i class="fa-regular fa-star" data-value="2"></i>
-        <i class="fa-regular fa-star" data-value="3"></i>
-        <i class="fa-regular fa-star" data-value="4"></i>
-        <i class="fa-regular fa-star" data-value="5"></i>
+      <input type="text" name="user_name" placeholder="Your Name" data-en="Your Name" data-ar="اسمك" aria-label="Your Name" required>
+      <input type="email" name="user_email" placeholder="Your Email" data-en="Your Email" data-ar="بريدك الإلكتروني" aria-label="Your Email" required>
+      <input type="tel" name="user_phone" placeholder="Phone Number" data-en="Phone Number" data-ar="رقم الهاتف" aria-label="Phone Number">
+      <textarea name="message" placeholder="Your Message" data-en="Your Message" data-ar="رسالتك" aria-label="Your Message" required></textarea>
+      <div class="stars" aria-label="Rate your experience from 1 to 5">
+        <i class="fa-regular fa-star" data-value="1" aria-hidden="true"></i>
+        <i class="fa-regular fa-star" data-value="2" aria-hidden="true"></i>
+        <i class="fa-regular fa-star" data-value="3" aria-hidden="true"></i>
+        <i class="fa-regular fa-star" data-value="4" aria-hidden="true"></i>
+        <i class="fa-regular fa-star" data-value="5" aria-hidden="true"></i>
       </div>
       <button type="submit" class="btn" data-en="Send Feedback" data-ar="إرسال">Send Feedback</button>
     </form>
+  </section>
 
-    <!-- ✅ البوب اب (ID متطابق مع الجافا سكريبت) -->
-    <div id="thankYouPopup" class="popup">
-      <div class="popup-content">
-        <p data-en="Thank you! Your feedback has been sent successfully 🎉"
-           data-ar="شكراً! تم إرسال ملاحظاتك بنجاح 🎉">
-          Thank you! Your feedback has been sent successfully 🎉
-        </p>
-        <button id="closePopupBtn" class="btn" data-en="Close" data-ar="إغلاق">Close</button>
-      </div>
-    </div>
+  <!-- Newsletter Section -->
+  <section id="newsletter" class="newsletter">
+    <h2 data-en="Subscribe to Our Newsletter" data-ar="اشترك في النشرة البريدية">Subscribe to Our Newsletter</h2>
+    <p data-en="Stay updated with the latest news and offers" data-ar="كن على اطلاع بأحدث الأخبار والعروض">Stay updated with the latest news and offers</p>
+    <form id="newsletterForm" class="subscribe-form">
+      <input type="email" name="newsletter_email" placeholder="Enter your email" data-en="Enter your email" data-ar="أدخل بريدك الإلكتروني" required>
+      <button type="submit" class="btn" data-en="Subscribe" data-ar="اشترك">Subscribe</button>
+    </form>
   </section>
 
   <footer>
     <p data-en="© 2025 Sasa Atelier. All rights reserved."
-       data-ar="© 2025 ساسا أتيليه. جميع الحقوق محفوظة.">
+       data-ar="© 2025 صاصا أتيليه. جميع الحقوق محفوظة.">
        © 2025 Sasa Atelier. All rights reserved.
     </p>
   </footer>
 
   <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
 
-  <!-- Swiper JS -->
+  <!-- WhatsApp Floating Button -->
+  <a id="whatsappBtn" href="https://wa.me/201061883443" target="_blank" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- Tawk.to Live Chat -->
+  <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/YOUR_PROPERTY_ID/default';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+    })();
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="script.js"></script>
 </body>
