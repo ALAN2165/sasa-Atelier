@@ -1,23 +1,29 @@
-// Reveal sections on scroll
+// ===== Reveal sections on scroll =====
 const elements = document.querySelectorAll(".card, .about p, .collection h2, .contact p, .feedback-form");
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("appear"); });
 }, { threshold: 0.2 });
 elements.forEach(el => observer.observe(el));
 
-// Typing Effect
-const text = "Elegance in Every Stitch";
-let i = 0;
-function typing() {
-  if (i < text.length) {
-    document.getElementById("typing").textContent += text.charAt(i);
-    i++;
-    setTimeout(typing, 120);
+// ===== Typing Effect (multi-lang support) =====
+function startTypingEffect() {
+  const typingEl = document.getElementById("typing");
+  if (!typingEl) return;
+  const text = typingEl.getAttribute(`data-${document.documentElement.lang}`) || "Elegance in Every Stitch";
+  typingEl.textContent = "";
+  let i = 0;
+  function typing() {
+    if (i < text.length) {
+      typingEl.textContent += text.charAt(i);
+      i++;
+      setTimeout(typing, 120);
+    }
   }
+  typing();
 }
-typing();
+startTypingEffect();
 
-// Feedback Stars + Animation
+// ===== Feedback Stars + Animation =====
 const stars = document.querySelectorAll(".stars i");
 let selectedRating = 0;
 
@@ -70,7 +76,7 @@ stars.forEach((star, index) => {
   });
 });
 
-// Scroll to Top
+// ===== Scroll to Top =====
 const scrollBtn = document.getElementById("scrollTopBtn");
 window.addEventListener("scroll", () => {
   if (window.scrollY > 300) scrollBtn.classList.add("show");
@@ -78,7 +84,7 @@ window.addEventListener("scroll", () => {
 });
 scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
-// Dark / Light Mode
+// ===== Dark / Light Mode =====
 const modeToggle = document.getElementById("modeToggle");
 modeToggle.addEventListener("click", () => {
   document.body.classList.toggle("dark");
@@ -87,9 +93,10 @@ modeToggle.addEventListener("click", () => {
   else icon.classList.replace("fa-sun", "fa-moon");
   modeToggle.classList.add("switching");
   setTimeout(() => modeToggle.classList.remove("switching"), 500);
+  updateNavColors();
 });
 
-// Scroll Progress Bar
+// ===== Scroll Progress Bar =====
 const progressBar = document.getElementById("progressBar");
 window.addEventListener("scroll", () => {
   const scrollTop = document.documentElement.scrollTop;
@@ -98,12 +105,12 @@ window.addEventListener("scroll", () => {
   progressBar.style.width = progress + "%";
 });
 
-// Explore Button
+// ===== Explore Button =====
 document.getElementById("exploreBtn").addEventListener("click", () => {
   document.getElementById("collection").scrollIntoView({ behavior: "smooth" });
 });
 
-// Smooth Scroll for Nav Links
+// ===== Smooth Scroll for Nav Links =====
 document.querySelectorAll("nav a").forEach(link => {
   link.addEventListener("click", e => {
     e.preventDefault();
@@ -111,7 +118,7 @@ document.querySelectorAll("nav a").forEach(link => {
   });
 });
 
-// Language Toggle
+// ===== Language Toggle =====
 const langToggle = document.getElementById("langToggle");
 let currentLang = "en";
 langToggle.addEventListener("click", () => {
@@ -128,9 +135,12 @@ langToggle.addEventListener("click", () => {
   document.querySelectorAll("input[placeholder], textarea[placeholder]").forEach(el => {
     el.placeholder = el.getAttribute(`data-${currentLang}`);
   });
+
+  // restart typing effect
+  startTypingEffect();
 });
 
-// ===== ✅ Swiper Init مع breakpoints =====
+// ===== Swiper Init =====
 const swiper = new Swiper('.swiper', {
   loop: true,
   autoplay: {
@@ -154,7 +164,42 @@ const swiper = new Swiper('.swiper', {
   }
 });
 
-// ===== EmailJS Send Feedback + Popup =====
+// ===== Newsletter Thank You Message =====
+const newsletterForm = document.getElementById("newsletterForm");
+if (newsletterForm) {
+  newsletterForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Hide form
+    newsletterForm.style.display = "none";
+
+    // Create Thank You message
+    const thankYou = document.createElement("div");
+    thankYou.className = "thank-you-box";
+
+    if (document.documentElement.lang === "ar") {
+      thankYou.innerHTML = `<h3>✅ شكراً لاشتراكك!</h3>
+                            <p>ستصلك أحدث الأخبار والعروض أولاً بأول.</p>`;
+    } else {
+      thankYou.innerHTML = `<h3>✅ Thank you for subscribing!</h3>
+                            <p>You’ll now stay updated with our latest news & offers.</p>`;
+    }
+
+    newsletterForm.parentNode.appendChild(thankYou);
+
+    // After 5 seconds fade out then show form again
+    setTimeout(() => {
+      thankYou.style.animation = "fadeOut 0.5s forwards";
+      setTimeout(() => {
+        thankYou.remove();
+        newsletterForm.style.display = "flex";
+        newsletterForm.reset();
+      }, 500);
+    }, 5000);
+  });
+}
+
+// ==== EmailJS Send Feedback + Popup =====
 const feedbackForm = document.getElementById("feedbackForm");
 const feedbackPopup = document.getElementById("thankYouPopup");
 const popupMessage = feedbackPopup ? feedbackPopup.querySelector("p") : null;
@@ -166,7 +211,6 @@ window.addEventListener("load", () => {
 
 function hidePopup(instant = false) {
   if (!feedbackPopup) return;
-
   if (instant) {
     feedbackPopup.classList.remove("show", "fade-out");
     feedbackPopup.style.display = "none";
@@ -186,7 +230,6 @@ if (closePopupBtn) {
 if (feedbackForm) {
   feedbackForm.addEventListener("submit", function(e) {
     e.preventDefault();
-
     emailjs.sendForm("service_bx794b7", "template_sfno6wa", feedbackForm, "angnRXHRdzuZeo33H")
       .then(() => {
         if (popupMessage) {
@@ -198,11 +241,7 @@ if (feedbackForm) {
             closePopupBtn.textContent = "Thanks";
           }
         }
-
-        // ✅ Reset form
         feedbackForm.reset();
-
-        // ✅ Reset stars
         selectedRating = 0;
         stars.forEach(s => {
           s.classList.remove("fa-solid", "active");
@@ -210,14 +249,11 @@ if (feedbackForm) {
           s.style.color = "";
           s.style.transform = "scale(1)";
         });
-
-        // ✅ Show popup with fade-in
         feedbackPopup.classList.remove("fade-out");
         feedbackPopup.style.display = "flex";
         setTimeout(() => feedbackPopup.classList.add("show"), 10);
       })
-      .catch((error) => {
-        console.error("EmailJS Error:", error);
+      .catch(() => {
         if (popupMessage) {
           if (document.documentElement.lang === "ar") {
             popupMessage.textContent = "❌ حصل خطأ أثناء الإرسال. حاول مرة تانية.";
@@ -227,8 +263,6 @@ if (feedbackForm) {
             closePopupBtn.textContent = "Close";
           }
         }
-
-        // ✅ حتى لو فيه خطأ البوب أب يظهر
         feedbackPopup.classList.remove("fade-out");
         feedbackPopup.style.display = "flex";
         setTimeout(() => feedbackPopup.classList.add("show"), 10);
@@ -239,7 +273,6 @@ if (feedbackForm) {
 // ===== ScrollSpy Nav Highlight + Moving Indicator =====
 const sections = document.querySelectorAll("section");
 const navLinks = document.querySelectorAll("nav a");
-
 const nav = document.querySelector("nav");
 const indicator = document.createElement("span");
 indicator.classList.add("nav-indicator");
@@ -279,7 +312,6 @@ function updateNavColors() {
 function updateScrollSpy() {
   let current = "";
   let insideSection = false;
-
   sections.forEach(section => {
     const sectionTop = section.offsetTop - 150;
     const sectionHeight = section.clientHeight;
@@ -288,7 +320,6 @@ function updateScrollSpy() {
       insideSection = true;
     }
   });
-
   navLinks.forEach(link => {
     link.classList.remove("active");
     if (link.getAttribute("href") === `#${current}`) {
@@ -296,9 +327,7 @@ function updateScrollSpy() {
       moveIndicator(link, true);
     }
   });
-
   if (!insideSection) moveIndicator(null, false);
-
   updateNavColors();
 }
 
