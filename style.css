@@ -2349,4 +2349,428 @@ body:not(.dark) .thank-you-box {
     margin-top: 10px;
   }
 }
+/* ===== Loader Overlay ===== */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5); /* خلفية نص شفافة */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
 
+.loader-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Spinner */
+.loader {
+  border: 5px solid rgba(255,255,255,0.2);
+  border-top: 5px solid hotpink;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+/* ===== Loader Overlay ===== */
+#loaderOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#loaderOverlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Gradient Spinner */
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 6px solid transparent;
+  border-top: 6px solid hotpink;
+  border-right: 6px solid pink;
+  border-radius: 50%;
+  animation: spin 1s linear infinite, colorShift 3s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes colorShift {
+  0% { border-top-color: hotpink; border-right-color: pink; }
+  50% { border-top-color: beige; border-right-color: hotpink; }
+  100% { border-top-color: pink; border-right-color: beige; }
+}
+/* Loader Overlay */
+#loaderOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  backdrop-filter: blur(4px);
+}
+
+/* Loader Spinner */
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid hotpink;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+#scrollTopBtn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, hotpink, pink);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+  z-index: 1500;
+}
+
+/* لما يبان */
+#scrollTopBtn.show {
+  opacity: 1;
+  visibility: visible;
+  animation: pulse 1.5s infinite;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,105,180,0.6); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(255,105,180,0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,105,180,0); }
+}
+/* WhatsApp Floating Button */
+#whatsappBtn {
+  position: fixed;
+  bottom: 25px;
+  left: 25px; /* عشان ميغطيش على زرار السكروول */
+  width: 55px;
+  height: 55px;
+  background: #25D366;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  z-index: 1600;
+  transition: transform 0.3s;
+}
+
+#whatsappBtn:hover {
+  transform: scale(1.1);
+}
+
+/* Pulse Animation */
+#whatsappBtn {
+  animation: pulseWhats 1.5s infinite;
+}
+
+@keyframes pulseWhats {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37,211,102,0.6); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(37,211,102,0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+}
+#scrollTopBtn {
+  right: 25px;
+  bottom: 25px;
+}
+
+#whatsappBtn {
+  left: 25px;
+  bottom: 25px;
+}
+/* Scroll To Top ثابت على اليمين في كل اللغات */
+#scrollTopBtn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px !important;
+  left: auto !important;
+  z-index: 1500;
+}
+
+/* WhatsApp ثابت على الشمال في كل اللغات */
+#whatsappBtn {
+  position: fixed;
+  bottom: 25px;
+  left: 25px !important;
+  right: auto !important;
+  z-index: 1500;
+}
+/* Scroll To Top Button */
+#scrollTopBtn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 55px;
+  height: 55px;
+  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+/* يظهر */
+#scrollTopBtn.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* شكل السهم */
+#scrollTopBtn i {
+  font-size: 22px;
+  transition: transform 0.3s ease;
+}
+
+/* Hover Animation */
+#scrollTopBtn:hover {
+  transform: scale(1.15);
+  background: linear-gradient(135deg, #ff1493, #ff69b4);
+}
+
+/* Hover تأثير على السهم */
+#scrollTopBtn:hover i {
+  transform: translateY(-3px);
+}
+
+/* Click Animation */
+#scrollTopBtn:active {
+  animation: clickBounce 0.4s ease;
+}
+
+@keyframes clickBounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(0.85); }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+/* ===== Loader Overlay ===== */
+#loaderOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+#loaderOverlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+.loader-spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(255,255,255,0.3);
+  border-top-color: hotpink;
+  border-radius: 50%;
+  animation: spin 1s linear infinite, glowPulse 1.5s ease-in-out infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 10px hotpink, 0 0 20px pink; }
+  50% { box-shadow: 0 0 25px hotpink, 0 0 40px pink; }
+}
+
+/* ===== CTA Buttons Glow ===== */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.btn:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 15px rgba(255,105,180,0.7);
+}
+.btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 25px rgba(255,105,180,1);
+}
+
+/* ===== Pulse Animation (Thank You Box) ===== */
+.thank-you-box {
+  text-align: center;
+  padding: 1rem;
+  animation: fadeIn 0.6s ease forwards;
+}
+.thank-you-box.pulse {
+  animation: fadeIn 0.6s ease forwards, pulseAnim 1.5s infinite;
+}
+@keyframes pulseAnim {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* ===== Sparkle Effect for Stars ===== */
+.sparkle {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: gold;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkleAnim 0.6s forwards;
+}
+@keyframes sparkleAnim {
+  0% { transform: scale(0) translate(0,0); opacity: 1; }
+  50% { transform: scale(1.3) translate(-5px, -10px); opacity: 1; }
+  100% { transform: scale(0) translate(10px, -20px); opacity: 0; }
+}
+
+/* ===== Fade Animations ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+/* ===== Loader Overlay (Needle & Thread) ===== */
+#loaderOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+#loaderOverlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Needle */
+.loader-needle {
+  width: 6px;
+  height: 60px;
+  background: linear-gradient(to bottom, silver, #ccc, silver);
+  border-radius: 3px;
+  position: relative;
+  animation: needleSwing 2s ease-in-out infinite;
+}
+.loader-needle::before {
+  content: "";
+  position: absolute;
+  top: -10px; left: -4px;
+  width: 14px; height: 14px;
+  border: 3px solid hotpink;
+  border-radius: 50%;
+  background: white;
+}
+
+/* Thread circle around needle */
+.loader-thread {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border: 3px dashed hotpink;
+  border-radius: 50%;
+  animation: spinThread 3s linear infinite;
+}
+
+/* Animations */
+@keyframes needleSwing {
+  0%,100% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+}
+@keyframes spinThread {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* Loader Overlay */
+#loaderOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  backdrop-filter: blur(4px);
+}
+
+/* Loader Spinner */
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid hotpink;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
