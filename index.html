@@ -24,6 +24,7 @@
   <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
+  <!-- Main CSS -->
   <link rel="stylesheet" href="style.css" />
 
   <!-- EmailJS -->
@@ -39,7 +40,11 @@
   <div id="progressBar"></div>
 
   <header>
-    <h1 id="siteTitle" class="gradient-animated">Sasa Atelier</h1>
+    <!-- Logo -->
+    <div class="logo">
+      <img src="assets/logo.png" alt="Sasa Atelier Logo">
+    </div>
+
     <nav>
       <a href="#about" data-en="About" data-ar="من نحن">About</a>
       <a href="#collection" data-en="Collection" data-ar="المجموعة">Collection</a>
@@ -80,20 +85,24 @@
     </p>
   </section>
 
-  <section id="collection" class="collection">
+  <section id="collection" class="collection-section">
     <h2 data-en="Our Collection" data-ar="مجموعتنا">Our Collection</h2>
 
-    <div class="swiper" role="region" aria-roledescription="carousel" aria-label="Sasa Atelier collection gallery">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide"><div class="placeholder-box" role="img" aria-label="Collection item 1">Image 1</div></div>
-        <div class="swiper-slide"><div class="placeholder-box" role="img" aria-label="Collection item 2">Image 2</div></div>
-        <div class="swiper-slide"><div class="placeholder-box" role="img" aria-label="Collection item 3">Image 3</div></div>
-        <div class="swiper-slide"><div class="placeholder-box" role="img" aria-label="Collection item 4">Image 4</div></div>
-        <div class="swiper-slide"><div class="placeholder-box" role="img" aria-label="Collection item 5">Image 5</div></div>
-      </div>
-      <div class="swiper-pagination" aria-hidden="true"></div>
-      <div class="swiper-button-prev" aria-label="Previous slide" title="Previous"></div>
-      <div class="swiper-button-next" aria-label="Next slide" title="Next"></div>
+    <div class="collection-row">
+      <!-- slot A -->
+      <div class="slot" id="slotA"></div>
+
+      <!-- progress bar بين A و B -->
+      <div class="bar"><span></span></div>
+
+      <!-- slot B (الوسط) -->
+      <div class="slot middle" id="slotB"></div>
+
+      <!-- progress bar بين B و C -->
+      <div class="bar"><span></span></div>
+
+      <!-- slot C -->
+      <div class="slot" id="slotC"></div>
     </div>
   </section>
 
@@ -140,19 +149,19 @@
     </p>
   </footer>
 
-<button id="scrollTopBtn" aria-label="Scroll to top">
-  <i class="fas fa-arrow-up"></i>
-</button>
+  <button id="scrollTopBtn" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
 
   <!-- WhatsApp Floating Button -->
   <a id="whatsappBtn" href="https://wa.me/201061883443" target="_blank" aria-label="Chat on WhatsApp">
     <i class="fab fa-whatsapp"></i>
   </a>
-<!-- Loader Overlay -->
-<div id="loaderOverlay">
-  <div class="loader"></div>
-</div>
 
+  <!-- Loader Overlay -->
+  <div id="loaderOverlay">
+    <div class="loader"></div>
+  </div>
 
   <!-- Tawk.to Live Chat -->
   <script type="text/javascript">
