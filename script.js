@@ -63,91 +63,106 @@ window.addEventListener("scroll", () => {
   if (window.scrollY > 300) scrollBtn.classList.add("show");
   else scrollBtn.classList.remove("show");
 });
-scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+if (scrollBtn) scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
 // ===== Dark / Light Mode =====
 const modeToggle = document.getElementById("modeToggle");
-modeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  const icon = modeToggle.querySelector("i");
-  if (document.body.classList.contains("dark")) icon.classList.replace("fa-moon", "fa-sun");
-  else icon.classList.replace("fa-sun", "fa-moon");
-  modeToggle.classList.add("switching");
-  setTimeout(() => modeToggle.classList.remove("switching"), 500);
-  updateNavColors();
-});
+if (modeToggle) {
+  modeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    const icon = modeToggle.querySelector("i");
+    if (document.body.classList.contains("dark")) icon.classList.replace("fa-moon", "fa-sun");
+    else icon.classList.replace("fa-sun", "fa-moon");
+    modeToggle.classList.add("switching");
+    setTimeout(() => modeToggle.classList.remove("switching"), 500);
+    updateNavColors();
+  });
+}
 
 // ===== Scroll Progress Bar =====
 const progressBar = document.getElementById("progressBar");
-window.addEventListener("scroll", () => {
-  const scrollTop = document.documentElement.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  const progress = (scrollTop / scrollHeight) * 100;
-  progressBar.style.width = progress + "%";
-});
+if (progressBar) {
+  window.addEventListener("scroll", () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    progressBar.style.width = progress + "%";
+  });
+}
 
 // ===== Explore Button =====
-document.getElementById("exploreBtn").addEventListener("click", () => {
-  document.getElementById("collection").scrollIntoView({ behavior: "smooth" });
-});
+const exploreBtn = document.getElementById("exploreBtn");
+if (exploreBtn) {
+  exploreBtn.addEventListener("click", () => {
+    const coll = document.getElementById("collection") || document.querySelector(".collection-section");
+    if (coll) coll.scrollIntoView({ behavior: "smooth" });
+  });
+}
 
 // ===== Smooth Scroll for Nav Links =====
 document.querySelectorAll("nav a").forEach(link => {
   link.addEventListener("click", e => {
     e.preventDefault();
-    document.querySelector(link.getAttribute("href")).scrollIntoView({ behavior: "smooth" });
+    const target = document.querySelector(link.getAttribute("href"));
+    if (target) target.scrollIntoView({ behavior: "smooth" });
   });
 });
 
 // ===== Language Toggle =====
 const langToggle = document.getElementById("langToggle");
 let currentLang = "en";
-langToggle.addEventListener("click", () => {
-  currentLang = currentLang === "en" ? "ar" : "en";
-  langToggle.classList.add("switching");
-  setTimeout(() => langToggle.classList.remove("switching"), 500);
+if (langToggle) {
+  langToggle.addEventListener("click", () => {
+    currentLang = currentLang === "en" ? "ar" : "en";
+    langToggle.classList.add("switching");
+    setTimeout(() => langToggle.classList.remove("switching"), 500);
 
-  document.documentElement.lang = currentLang;
-  document.body.dir = currentLang === "ar" ? "rtl" : "ltr";
+    document.documentElement.lang = currentLang;
+    document.body.dir = currentLang === "ar" ? "rtl" : "ltr";
 
-  document.querySelectorAll("[data-en]").forEach(el => {
-    el.textContent = el.getAttribute(`data-${currentLang}`);
+    document.querySelectorAll("[data-en]").forEach(el => {
+      el.textContent = el.getAttribute(`data-${currentLang}`);
+    });
+    document.querySelectorAll("input[placeholder], textarea[placeholder]").forEach(el => {
+      el.placeholder = el.getAttribute(`data-${currentLang}`);
+    });
+
+    startTypingEffect();
   });
-  document.querySelectorAll("input[placeholder], textarea[placeholder]").forEach(el => {
-    el.placeholder = el.getAttribute(`data-${currentLang}`);
+}
+
+// ===== Swiper Init (defensive) =====
+try {
+  const swiper = new Swiper('.swiper', {
+    loop: true,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    effect: "slide",
+    speed: 800,
+    breakpoints: {
+      0: { slidesPerView: 1 },
+      600: { slidesPerView: 2 },
+      900: { slidesPerView: 3 }
+    }
   });
-
-  startTypingEffect();
-});
-
-// ===== Swiper Init =====
-const swiper = new Swiper('.swiper', {
-  loop: true,
-  autoplay: {
-    delay: 2500,
-    disableOnInteraction: false,
-  },
-  pagination: {
-    el: '.swiper-pagination',
-    clickable: true,
-  },
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-  effect: "slide",
-  speed: 800,
-  breakpoints: {
-    0: { slidesPerView: 1 },
-    600: { slidesPerView: 2 },
-    900: { slidesPerView: 3 }
-  }
-});
+} catch (e) {
+  // Swiper not loaded — skip
+}
 
 // ===== Loader =====
 const loaderOverlay = document.getElementById("loaderOverlay");
-function showLoader() { loaderOverlay.classList.add("show"); }
-function hideLoader() { loaderOverlay.classList.remove("show"); }
+function showLoader() { if (loaderOverlay) loaderOverlay.classList.add("show"); }
+function hideLoader() { if (loaderOverlay) loaderOverlay.classList.remove("show"); }
 
 // ===== Newsletter Thank You Message =====
 const newsletterForm = document.getElementById("newsletterForm");
@@ -239,13 +254,22 @@ if (feedbackForm) {
   });
 }
 
+// ===== Close Popup Button =====
+if (closePopupBtn && feedbackPopup) {
+  closePopupBtn.addEventListener("click", () => {
+    feedbackPopup.classList.remove("show");
+    feedbackPopup.style.display = "none";
+  });
+}
+
+
 // ===== ScrollSpy Nav Highlight + Moving Indicator =====
 const sections = document.querySelectorAll("section");
 const navLinks = document.querySelectorAll("nav a");
 const nav = document.querySelector("nav");
 const indicator = document.createElement("span");
 indicator.classList.add("nav-indicator");
-nav.appendChild(indicator);
+if (nav) nav.appendChild(indicator);
 
 function moveIndicator(element, show = true) {
   if (!show || !element) {
@@ -302,3 +326,55 @@ function updateScrollSpy() {
 
 window.addEventListener("scroll", updateScrollSpy);
 window.addEventListener("load", updateScrollSpy);
+
+// ======= Collection Slider (صور تتحرك بين A-B-C + Zoom للوسط + Smooth Transition) =======
+(function () {
+  const slotA = document.getElementById("slotA");
+  const slotB = document.getElementById("slotB");
+  const slotC = document.getElementById("slotC");
+  const bars = document.querySelectorAll(".collection-row .bar span");
+
+  const images = [
+    "assets/dress1.jpg",
+    "assets/dress2.jpg",
+    "assets/dress3.jpg"
+  ];
+
+  let index = 0;
+  const delay = 3000;
+
+  function renderSlides() {
+    slotA.innerHTML = `<img src="${images[index % images.length]}" alt="Dress" class="fade">`;
+    slotB.innerHTML = `<img src="${images[(index + 1) % images.length]}" alt="Dress" class="fade middle">`;
+    slotC.innerHTML = `<img src="${images[(index + 2) % images.length]}" alt="Dress" class="fade">`;
+
+    requestAnimationFrame(() => {
+      document.querySelectorAll(".fade").forEach(img => {
+        img.style.opacity = "1";
+        img.style.transform = "scale(1)";
+        img.style.transition = "opacity 0.8s ease, transform 0.8s ease";
+      });
+      const midImg = slotB.querySelector("img");
+      midImg.style.transform = "scale(1.15)";
+    });
+
+    bars.forEach(bar => {
+      bar.style.transition = "none";
+      bar.style.width = "0%";
+    });
+
+    const bar = bars[index % bars.length];
+    bar.style.transition = "width 3s linear";
+    requestAnimationFrame(() => {
+      bar.style.width = "100%";
+    });
+  }
+
+  function loop() {
+    index = (index + 1) % images.length;
+    renderSlides();
+  }
+
+  renderSlides();
+  setInterval(loop, delay);
+})();
